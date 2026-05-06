@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/nicolasfara/Template-for-Embedded-Rust/compare/v0.2.0...v0.2.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* use version name and upload compiler firmwares ([68303a3](https://github.com/nicolasfara/Template-for-Embedded-Rust/commit/68303a31aeb4906d630b19c44cf74cddc9622e52))
+
 ## [0.2.0](https://github.com/nicolasfara/Template-for-Embedded-Rust/compare/v0.1.0...v0.2.0) (2026-05-06)
 
 
