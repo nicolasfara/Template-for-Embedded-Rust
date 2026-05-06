@@ -1,0 +1,27 @@
+[graph]
+targets = [{ triple = "thumbv7em-none-eabihf" }]
+
+[advisories]
+version = 2
+yanked = "deny"
+# Transitive through cortex-m 0.7.x. RustSec currently lists no safe upgrade path.
+ignore = ["RUSTSEC-2026-0110"]
+
+[licenses]
+version = 2
+allow = [
+    "Apache-2.0",
+    "MIT",
+    "Unicode-3.0",
+]
+confidence-threshold = 0.8
+
+[bans]
+multiple-versions = "allow"
+wildcards = "allow"
+highlight = "all"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]

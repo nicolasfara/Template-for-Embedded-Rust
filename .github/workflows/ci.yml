@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  DEFMT_LOG: info
+
+jobs:
+  checks:
+    name: Firmware checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy,llvm-tools-preview,rustfmt
+          targets: thumbv7em-none-eabihf
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Check formatting
+        run: cargo fmt --all --check
+
+      - name: Run Clippy
+        run: cargo clippy --locked --bins --no-default-features --features stm32f401re -- -D warnings
+
+      - name: Check firmware
+        run: cargo check --locked --release --no-default-features --features stm32f401re
+
+      - name: Install cargo-deny
+        uses: taiki-e/install-action@cargo-deny
+
+      - name: Check dependency policy
+        run: cargo deny check
+
