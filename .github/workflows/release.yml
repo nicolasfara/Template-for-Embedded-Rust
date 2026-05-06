@@ -44,24 +44,38 @@ jobs:
         run: cargo build --locked --release --no-default-features --features stm32f401re
 
       - name: Package firmware artifacts
+        id: package
         if: ${{ steps.release.outputs.release_created == 'true' }}
         run: |
           set -euo pipefail
           elf="target/thumbv7em-none-eabihf/release/stm32-embassy-template"
+          version="${{ steps.release.outputs.tag_name }}"
           host="$(rustc -vV | sed -n 's/^host: //p')"
           objcopy="$(rustc --print sysroot)/lib/rustlib/${host}/bin/llvm-objcopy"
-          cp "${elf}" firmware-stm32f401re.elf
-          "${objcopy}" -O binary "${elf}" firmware-stm32f401re.bin
+          elf_name="firmware-stm32f401re-${version}.elf"
+          bin_name="firmware-stm32f401re-${version}.bin"
+          cp "${elf}" "${elf_name}"
+          "${objcopy}" -O binary "${elf}" "${bin_name}"
+          {
+            echo "elf_name=${elf_name}"
+            echo "bin_name=${bin_name}"
+          } >> "${GITHUB_OUTPUT}"
 
-      - name: Upload firmware artifacts
+      - name: Upload workflow artifacts
         if: ${{ steps.release.outputs.release_created == 'true' }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ steps.release.outputs.tag_name }}
-        run: |
-          set -euo pipefail
-          if [ -z "${RELEASE_TAG}" ]; then
-            RELEASE_TAG="v$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n 1)"
-          fi
-          gh release upload "${RELEASE_TAG}" firmware-stm32f401re.elf firmware-stm32f401re.bin --clobber
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-stm32f401re-${{ steps.release.outputs.tag_name }}
+          path: |
+            ${{ steps.package.outputs.elf_name }}
+            ${{ steps.package.outputs.bin_name }}
+          if-no-files-found: error
 
+      - name: Attach firmware to GitHub release
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release.outputs.tag_name }}
+          files: |
+            ${{ steps.package.outputs.elf_name }}
+            ${{ steps.package.outputs.bin_name }}
