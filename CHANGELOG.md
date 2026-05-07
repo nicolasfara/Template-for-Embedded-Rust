@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/nicolasfara/Template-for-Embedded-Rust/compare/v0.2.1...v0.2.2) (2026-05-07)
+
+
+### Bug Fixes
+
+* change chip reference ([6ad8f57](https://github.com/nicolasfara/Template-for-Embedded-Rust/commit/6ad8f578c5e9caa6538c0485b831c71bc6a8ea82))
+
 ## [0.2.1](https://github.com/nicolasfara/Template-for-Embedded-Rust/compare/v0.2.0...v0.2.1) (2026-05-06)
 
 
