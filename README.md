@@ -2,7 +2,7 @@
 
 Template repository for `no_std` embedded Rust firmware on STM32 microcontrollers with
 [Embassy](https://embassy.dev/). The default configuration targets the
-Nucleo-F401RE board (`stm32f401re`) and runs a small async hello world that blinks
+STM32F401RC chip (`stm32f401rc`) and runs a small async hello world that blinks
 the user LED on `PA5` while logging with `defmt` over RTT.
 
 After pushing this repository to GitHub, enable **Template repository** in the
@@ -35,7 +35,7 @@ Build the default firmware:
 cargo build --release
 ```
 
-Flash and run it on a Nucleo-F401RE with an ST-Link/debug probe attached:
+Flash and run it on an STM32F401RC with an ST-Link/debug probe attached:
 
 ```sh
 cargo run --release
@@ -45,11 +45,11 @@ You should see RTT logs from `defmt` and the board LED should blink.
 
 ## Selecting An STM32 Chip
 
-The chip is selected with Cargo features. The template enables `stm32f401re` by
+The chip is selected with Cargo features. The template enables `stm32f401rc` by
 default:
 
 ```sh
-cargo build --release --no-default-features --features stm32f401re
+cargo build --release --no-default-features --features stm32f401rc
 ```
 
 To add another STM32 IC, add a crate feature in `Cargo.toml` that forwards to the
@@ -75,8 +75,8 @@ Run the same checks as CI:
 
 ```sh
 cargo fmt --all --check
-cargo clippy --locked --bins --no-default-features --features stm32f401re -- -D warnings
-cargo check --locked --release --no-default-features --features stm32f401re
+cargo clippy --locked --bins --no-default-features --features stm32f401rc -- -D warnings
+cargo check --locked --release --no-default-features --features stm32f401rc
 cargo deny check
 ```
 

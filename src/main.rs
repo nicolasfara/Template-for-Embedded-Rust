@@ -9,14 +9,14 @@ use embassy_stm32::gpio::{Level, Output, Speed};
 use embassy_time::{Duration, Timer};
 use panic_probe as _;
 
-/// Embassy hello world for the Nucleo-F401RE default target.
+/// Embassy hello world for the STM32F401RC default target.
 #[embassy_executor::main]
 async fn main(spawner: embassy_executor::Spawner) {
     let _ = spawner;
     let peripherals = embassy_stm32::init(Config::default());
     let mut led = Output::new(peripherals.PA5, Level::Low, Speed::Low);
 
-    info!("hello from Embassy on STM32F401RE");
+    info!("hello from Embassy on STM32F401RC");
 
     loop {
         led.set_high();

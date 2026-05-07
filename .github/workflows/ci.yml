@@ -33,14 +33,13 @@ jobs:
         run: cargo fmt --all --check
 
       - name: Run Clippy
-        run: cargo clippy --locked --bins --no-default-features --features stm32f401re -- -D warnings
+        run: cargo clippy --locked --bins --no-default-features --features stm32f401rc -- -D warnings
 
       - name: Check firmware
-        run: cargo check --locked --release --no-default-features --features stm32f401re
+        run: cargo check --locked --release --no-default-features --features stm32f401rc
 
       - name: Install cargo-deny
         uses: taiki-e/install-action@cargo-deny
 
       - name: Check dependency policy
         run: cargo deny check
-

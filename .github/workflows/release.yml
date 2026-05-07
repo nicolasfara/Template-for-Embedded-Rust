@@ -41,7 +41,7 @@ jobs:
 
       - name: Build release firmware
         if: ${{ steps.release.outputs.release_created == 'true' }}
-        run: cargo build --locked --release --no-default-features --features stm32f401re
+        run: cargo build --locked --release --no-default-features --features stm32f401rc
 
       - name: Package firmware artifacts
         id: package
@@ -52,8 +52,8 @@ jobs:
           version="${{ steps.release.outputs.tag_name }}"
           host="$(rustc -vV | sed -n 's/^host: //p')"
           objcopy="$(rustc --print sysroot)/lib/rustlib/${host}/bin/llvm-objcopy"
-          elf_name="firmware-stm32f401re-${version}.elf"
-          bin_name="firmware-stm32f401re-${version}.bin"
+          elf_name="firmware-stm32f401rc-${version}.elf"
+          bin_name="firmware-stm32f401rc-${version}.bin"
           cp "${elf}" "${elf_name}"
           "${objcopy}" -O binary "${elf}" "${bin_name}"
           {
@@ -65,7 +65,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created == 'true' }}
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-stm32f401re-${{ steps.release.outputs.tag_name }}
+          name: firmware-stm32f401rc-${{ steps.release.outputs.tag_name }}
           path: |
             ${{ steps.package.outputs.elf_name }}
             ${{ steps.package.outputs.bin_name }}

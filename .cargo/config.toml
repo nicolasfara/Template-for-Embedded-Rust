@@ -2,7 +2,7 @@
 target = "thumbv7em-none-eabihf"
 
 [target.thumbv7em-none-eabihf]
-runner = "probe-rs run --chip STM32F401RETx"
+runner = "probe-rs run --chip STM32F401RC"
 rustflags = [
     "-C",
     "link-arg=-Tlink.x",
@@ -12,4 +12,3 @@ rustflags = [
 
 [env]
 DEFMT_LOG = "info"
-
