@@ -5,9 +5,6 @@ Template repository for `no_std` embedded Rust firmware on STM32 microcontroller
 STM32F401RC chip (`stm32f401rc`) and runs a small async hello world that blinks
 the user LED on `PA5` while logging with `defmt` over RTT.
 
-After pushing this repository to GitHub, enable **Template repository** in the
-repository settings so new projects can be generated from it.
-
 ## Getting Ready
 
 Install Rust and the embedded target:
@@ -82,7 +79,7 @@ cargo deny check
 
 ## Releases
 
-Releases are driven by Conventional Commits on the `main` branch through Release
+Releases are driven by [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) on the `master` branch through Release
 Please:
 
 ```text
